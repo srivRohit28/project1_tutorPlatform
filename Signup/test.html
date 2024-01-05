@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Firebase Authentication Example</title>
+  <!-- Firebase App and Auth SDK
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script> -->
+</head>
+<body>
+  <h1>Firebase Authentication Example</h1>
+
+  <h2>Signup</h2>
+  <form id="signupForm">
+    <label for="signupEmail">Email:</label>
+    <input type="email" id="signupEmail" required><br>
+    <label for="signupPassword">Password:</label>
+    <input type="password" id="signupPassword" required><br>
+    <button type="submit">Signup</button>
+  </form>
+
+  <h2>Login</h2>
+  <form id="loginForm">
+    <label for="loginEmail">Email:</label>
+    <input type="email" id="loginEmail" required><br>
+    <label for="loginPassword">Password:</label>
+    <input type="password" id="loginPassword" required><br>
+    <button type="submit">Login</button>
+  </form>
+
+  <script type="module">
+   // Import the functions you need from the SDKs you need
+   // Import the functions you need from the SDKs you need
+   import { initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+   import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+   // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyA4fg_x-GFnD5TTsDJhdcgPzkiClfnpLh4",
+    authDomain: "project1-1a12a.firebaseapp.com",
+    databaseURL: "https://project1-1a12a-default-rtdb.firebaseio.com",
+    projectId: "project1-1a12a",
+    storageBucket: "project1-1a12a.appspot.com",
+    messagingSenderId: "503658861390",
+    appId: "1:503658861390:web:0ca201b7574cc71004041f"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const signupForm = document.getElementById('signupForm');
+    signupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          console.log('Signup successful:', userCredential.user);
+          alert("sigmup doe")
+          window.location.href = "./index.html"
+        })
+        .catch((error) => {
+          console.error('Signup error:', error.message);
+        });
+    });
+
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          console.log('Login successful:', userCredential.user);
+          // You can redirect or perform other actions here after login
+        })
+        .catch((error) => {
+          console.error('Login error:', error.message);
+        });
+    });
+  </script>
+</body>
+</html>
