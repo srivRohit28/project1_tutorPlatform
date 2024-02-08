@@ -50,6 +50,30 @@ input[type="text"],
 input[type="password"],
 input[type="email"] {
   height: 40px;
+  width: 100%;
+}
+
+input[type="checkbox"] {
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+input[type="checkbox"]:checked::before {
+  content: "\2713";
+  display: flex;
+  text-align: center;
+  line-height: 20px;
+  color: #007bff;
 }
 
 button {
@@ -67,5 +91,6 @@ button:hover {
 @media (max-width: 480px) {
   .container {
     width: 90%;
+    /* background-image: url(../Login/login.html); */
   }
 }

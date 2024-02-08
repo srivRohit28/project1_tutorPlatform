@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Signup Page</title>
+    <link rel="stylesheet" href="signup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <form
+        class="signup-form"
+        id="signupForm"
+        action="../Dashboard/index.html"
+      >
+        <h2>Signup</h2>
+        <input type="text" placeholder="Name" required id="name" />
+        <input type="text" placeholder="Username" required id="username" />
+        <input type="email" placeholder="Email" required id="signupEmail" />
+        Are you a teacher? <input type="checkbox" id="ifTeacher" />
+        <div id="passGroup">
+          <div class="pass">
+            <input
+              type="password"
+              placeholder="Password"
+              required
+              id="signupPassword"
+            />
+          </div>
+          <div class="confirmPass">
+            <input
+              type="password"
+              placeholder="Cofirm Password"
+              required
+              id="confirmPass"
+            />
+          </div>
+        </div>
+        <button type="submit" id="signup">Signup</button>
+      </form>
+    </div>
+    <script src="../Signup/signup.js" type="module"></script>
+  </body>
+</html>
