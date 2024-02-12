@@ -7,8 +7,9 @@ import {
   getFirestore,
   collection,
   addDoc,
+  doc,
+  firestore
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyA4fg_x-GFnD5TTsDJhdcgPzkiClfnpLh4",
@@ -21,21 +22,20 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app); 
-const db = getFirestore(app); 
-
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 const signupForm = document.getElementById("signupForm");
 
 // event listener, form submission
 signupForm.addEventListener("submit", async (e) => {
-  e.preventDefault(); 
-  
+  e.preventDefault();
+
   const name = document.getElementById("name").value;
   const email = document.getElementById("signupEmail").value;
   const password = document.getElementById("signupPassword").value;
   const userName = document.getElementById("username").value;
-  const isTutor = document.getElementById("ifTeacher").checked;
+  const role = document.getElementById("role").value;
 
   try {
     // user creation, email and password, firebase authentication
@@ -47,22 +47,40 @@ signupForm.addEventListener("submit", async (e) => {
     const user = userCredential.user;
 
     // database creation, basis of user
-    if (isTutor) {
-      await addDoc(collection(db, "Tutors"), {
-        userId: user.uid,
-        email: email,
-        name: name,
-        user: userName,
-      });
+    // if (isTutor) {
+    //   await addDoc(collection(db, "Tutors"), {
+    //     userId: user.uid,
+    //     email: email,
+    //     name: name,
+    //     role: role,
+    //   });
+    // } else {
+    //   await addDoc(collection(db, "Students"), {
+    //     userId: user.uid,
+    //     email: email,
+    //   });
+    // }
+
+    if (role === "admin") {
+      const adminDocRef = doc(
+        collection(firestore, "admin"),
+        userCredential.user.uid
+      );
+      setDoc(adminDocRef, userData);
+    } else if (role === "teacher") {
+      const teacherDocRef = doc(
+        collection(firestore, "approve_Teacher"),
+        userCredential.user.uid
+      );
+      setDoc(teacherDocRef, userData);
     } else {
-      await addDoc(collection(db, "Students"), {
-        userId: user.uid,
-        email: email,
-        
-      });
+      const roleDocRef = doc(
+        collection(firestore, "students"),
+        userCredential.user.uid
+      );
+      setDoc(roleDocRef, userData);
     }
 
-    
     window.location.href = "../Login/login.html";
   } catch (error) {
     console.error("Signup error:", error.message);

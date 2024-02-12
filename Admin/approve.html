@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List Approved Teachers</title>
+    <!-- Add Firebase SDK -->
+    <script
+      type="module"
+      src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"
+    ></script>
+    <script
+      type="module"
+      src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"
+    ></script>
+    <script
+      type="module"
+      src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
+    ></script>
+  </head>
+
+  <body>
+    <h2>Approved Teachers</h2>
+
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="teacherList">
+        <!-- Table rows will be added dynamically -->
+      </tbody>
+    </table>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+      import {
+        getFirestore,
+        collection,
+        getDocs,
+        doc,
+        setDoc,
+        deleteDoc,
+        getDoc,
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyA4fg_x-GFnD5TTsDJhdcgPzkiClfnpLh4",
+        authDomain: "project1-1a12a.firebaseapp.com",
+        databaseURL: "https://project1-1a12a-default-rtdb.firebaseio.com",
+        projectId: "project1-1a12a",
+        storageBucket: "project1-1a12a.appspot.com",
+        messagingSenderId: "503658861390",
+        appId: "1:503658861390:web:0ca201b7574cc71004041f",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const firestore = getFirestore(app);
+
+      async function fetchApprovedTeachers() {
+        const teacherCollectionRef = collection(firestore, "approve_Teacher");
+        const teacherSnapshot = await getDocs(teacherCollectionRef);
+
+        const teacherListContainer = document.getElementById("teacherList");
+
+        teacherSnapshot.forEach((teacherDoc) => {
+          const teacherData = teacherDoc.data();
+          const email = teacherData.email;
+          const name = teacherData.name;
+          const docId = teacherDoc.id;
+
+          const row = document.createElement("tr");
+          row.innerHTML = `<td>${email}</td><td>${name}</td><td><button id="approveButton_${docId}">Approve</button></td>`;
+
+          teacherListContainer.appendChild(row);
+
+          const approveButton = document.getElementById(
+            `approveButton_${docId}`
+          );
+          approveButton.addEventListener("click", () =>
+            approveTeacher(teacherCollectionRef, docId)
+          );
+        });
+      }
+
+      async function approveTeacher(teacherCollectionRef, docId) {
+        console.log("okok", docId);
+
+        const teacherDocRef = doc(teacherCollectionRef, docId);
+
+        try {
+          const teacherDoc = await getDoc(teacherDocRef);
+
+          console.log(teacherDoc);
+
+          if (teacherDoc.exists()) {
+            console.log("first");
+            const teacherData = teacherDoc.data();
+
+            const newTeacherCollectionRef = collection(firestore, "teachers");
+            const newTeacherDocRef = doc(newTeacherCollectionRef, docId);
+            await setDoc(newTeacherDocRef, teacherData);
+
+            await deleteDoc(teacherDocRef);
+            document.getElementById("teacherList").innerHTML = "";
+            fetchApprovedTeachers();
+          }
+        } catch (error) {
+          console.error("Error fetching document:", error);
+        }
+      }
+
+      fetchApprovedTeachers();
+    </script>
+  </body>
+</html>

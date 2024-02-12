@@ -16,7 +16,11 @@
         <input type="text" placeholder="Name" required id="name" />
         <input type="text" placeholder="Username" required id="username" />
         <input type="email" placeholder="Email" required id="signupEmail" />
-        Are you a teacher? <input type="checkbox" id="ifTeacher" />
+        <label for="role">Select Role:</label>
+        <select id="role" required>
+          <option value="student">Student</option>
+          <option value="teacher">Teacher</option>
+        </select>
         <div id="passGroup">
           <div class="pass">
             <input
