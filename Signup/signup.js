@@ -7,8 +7,8 @@ import {
   getFirestore,
   collection,
   addDoc,
-  doc,
-  firestore
+  setDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -45,43 +45,29 @@ signupForm.addEventListener("submit", async (e) => {
       password
     );
     const user = userCredential.user;
-
-    // database creation, basis of user
-    // if (isTutor) {
-    //   await addDoc(collection(db, "Tutors"), {
-    //     userId: user.uid,
-    //     email: email,
-    //     name: name,
-    //     role: role,
-    //   });
-    // } else {
-    //   await addDoc(collection(db, "Students"), {
-    //     userId: user.uid,
-    //     email: email,
-    //   });
-    // }
+    console.log(user)
 
     if (role === "admin") {
       const adminDocRef = doc(
-        collection(firestore, "admin"),
+        collection(db, "admin"),
         userCredential.user.uid
       );
       setDoc(adminDocRef, userData);
     } else if (role === "teacher") {
       const teacherDocRef = doc(
-        collection(firestore, "approve_Teacher"),
+        collection(db, "approve_Teacher"),
         userCredential.user.uid
       );
       setDoc(teacherDocRef, userData);
     } else {
       const roleDocRef = doc(
-        collection(firestore, "students"),
+        collection(db, "students"),
         userCredential.user.uid
       );
       setDoc(roleDocRef, userData);
     }
 
-    window.location.href = "../Login/login.html";
+    // window.location.href = "../Login/login.html";
   } catch (error) {
     console.error("Signup error:", error.message);
   }
