@@ -8,26 +8,29 @@ import {
   collection,
   addDoc,
   doc,
-  firestore
+  setDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA4fg_x-GFnD5TTsDJhdcgPzkiClfnpLh4",
-  authDomain: "project1-1a12a.firebaseapp.com",
-  databaseURL: "https://project1-1a12a-default-rtdb.firebaseio.com",
-  projectId: "project1-1a12a",
-  storageBucket: "project1-1a12a.appspot.com",
-  messagingSenderId: "503658861390",
-  appId: "1:503658861390:web:0ca201b7574cc71004041f",
+  apiKey: "AIzaSyChaQ4bBC3eP21SHvolyQsKCYhoam-HGIw",
+  authDomain: "sample-side-d8f69.firebaseapp.com",
+  projectId: "sample-side-d8f69",
+  storageBucket: "sample-side-d8f69.appspot.com",
+  messagingSenderId: "161040903419",
+  appId: "1:161040903419:web:50d0f5a9ae860f9ce6d45e"
 };
+
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
+
 
 const signupForm = document.getElementById("signupForm");
 
-// event listener, form submission
 signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -37,51 +40,60 @@ signupForm.addEventListener("submit", async (e) => {
   const userName = document.getElementById("username").value;
   const role = document.getElementById("role").value;
 
-  try {
-    // user creation, email and password, firebase authentication
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    const user = userCredential.user;
+  let userData = {
+    email: email,
+    role: role
+  };
 
-    // database creation, basis of user
-    // if (isTutor) {
-    //   await addDoc(collection(db, "Tutors"), {
-    //     userId: user.uid,
-    //     email: email,
-    //     name: name,
-    //     role: role,
-    //   });
-    // } else {
-    //   await addDoc(collection(db, "Students"), {
-    //     userId: user.uid,
-    //     email: email,
-    //   });
-    // }
+
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    userData = {
+      ...userData,
+      name: name,
+      userName: userName,
+    };
 
     if (role === "admin") {
-      const adminDocRef = doc(
-        collection(firestore, "admin"),
-        userCredential.user.uid
-      );
-      setDoc(adminDocRef, userData);
+      const adminDocRef = doc(collection(db, "admin"), userCredential.user.uid);
+      await setDoc(adminDocRef, userData);
     } else if (role === "teacher") {
-      const teacherDocRef = doc(
-        collection(firestore, "approve_Teacher"),
-        userCredential.user.uid
-      );
-      setDoc(teacherDocRef, userData);
+      const teacherDocRef = doc(collection(db, "approve_Teacher"), userCredential.user.uid);
+
+      const pictureFile = document.getElementById("teacherPicture").files[0];
+
+      let pictureUrl = null;
+
+      if (pictureFile) {
+        const pictureRef = ref(storage, `teacherPictures/${email}-${Date.now()}`);
+
+        await uploadBytes(pictureRef, pictureFile);
+
+        pictureUrl = await getDownloadURL(pictureRef);
+
+        userData = {
+          ...userData,
+          degree: document.getElementById("teacherDegree").value,
+          experience: document.getElementById("teacherExperience").value,
+          subject: document.getElementById("teacherSubject").value,
+          picture: pictureUrl
+        };
+      }
+
+      userData = {
+        ...userData,
+        picture: pictureUrl
+      };
+
+      await setDoc(teacherDocRef, userData);
     } else {
-      const roleDocRef = doc(
-        collection(firestore, "students"),
-        userCredential.user.uid
-      );
-      setDoc(roleDocRef, userData);
+      const roleDocRef = doc(collection(db, "students"), userCredential.user.uid);
+      await setDoc(roleDocRef, userData);
     }
 
-    window.location.href = "../Login/login.html";
+    alert('Signup successful!');
+    // window.location.href = "../Login/login.html";
   } catch (error) {
     console.error("Signup error:", error.message);
   }

@@ -1,121 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>List Approved Teachers</title>
-    <!-- Add Firebase SDK -->
-    <script
-      type="module"
-      src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"
-    ></script>
-    <script
-      type="module"
-      src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"
-    ></script>
-    <script
-      type="module"
-      src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
-    ></script>
-  </head>
 
-  <body>
-    <h2>Approved Teachers</h2>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>List Approved Teachers</title>
+</head>
 
-    <table border="1">
-      <thead>
-        <tr>
-          <th>Email</th>
-          <th>Name</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody id="teacherList">
-        <!-- Table rows will be added dynamically -->
-      </tbody>
-    </table>
+<body>
+  <h2>Approved Teachers</h2>
 
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-      import {
-        getFirestore,
-        collection,
-        getDocs,
-        doc,
-        setDoc,
-        deleteDoc,
-        getDoc,
-      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="teacherList">
+      <!-- Table rows will be added dynamically -->
+    </tbody>
+  </table>
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyA4fg_x-GFnD5TTsDJhdcgPzkiClfnpLh4",
-        authDomain: "project1-1a12a.firebaseapp.com",
-        databaseURL: "https://project1-1a12a-default-rtdb.firebaseio.com",
-        projectId: "project1-1a12a",
-        storageBucket: "project1-1a12a.appspot.com",
-        messagingSenderId: "503658861390",
-        appId: "1:503658861390:web:0ca201b7574cc71004041f",
-      };
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      doc,
+      setDoc,
+      deleteDoc,
+      getDoc,
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      const firestore = getFirestore(app);
+    const firebaseConfig = {
+      apiKey: "AIzaSyChaQ4bBC3eP21SHvolyQsKCYhoam-HGIw",
+      authDomain: "sample-side-d8f69.firebaseapp.com",
+      projectId: "sample-side-d8f69",
+      storageBucket: "sample-side-d8f69.appspot.com",
+      messagingSenderId: "161040903419",
+      appId: "1:161040903419:web:50d0f5a9ae860f9ce6d45e"
+    };
 
-      async function fetchApprovedTeachers() {
-        const teacherCollectionRef = collection(firestore, "approve_Teacher");
-        const teacherSnapshot = await getDocs(teacherCollectionRef);
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const firestore = getFirestore(app);
 
-        const teacherListContainer = document.getElementById("teacherList");
+    async function fetchApprovedTeachers() {
+      const teacherCollectionRef = collection(firestore, "approve_Teacher");
+      const teacherSnapshot = await getDocs(teacherCollectionRef);
 
-        teacherSnapshot.forEach((teacherDoc) => {
+      const teacherListContainer = document.getElementById("teacherList");
+
+      teacherSnapshot.forEach((teacherDoc) => {
+        const teacherData = teacherDoc.data();
+        const email = teacherData.email;
+        const name = teacherData.name;
+        const docId = teacherDoc.id;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${email}</td><td>${name}</td>
+        <td>
+          <button id="detailsButton_${docId}">See Details</button>
+                          <button id="approveButton_${docId}">Approve</button>
+                          <button id="removeButton_${docId}">Remove</button>
+                        </td>`;
+
+        teacherListContainer.appendChild(row);
+
+        const approveButton = document.getElementById(`approveButton_${docId}`);
+        approveButton.addEventListener("click", () =>
+          approveTeacher(teacherCollectionRef, docId)
+        );
+
+        const removeButton = document.getElementById(`removeButton_${docId}`);
+        removeButton.addEventListener("click", () =>
+          removeTeacher(teacherCollectionRef, docId)
+        );
+
+        const detailsButton = document.getElementById(`detailsButton_${docId}`);
+        detailsButton.addEventListener("click", () =>
+          openDetailsPage(docId)
+        );
+      });
+    }
+
+    async function approveTeacher(teacherCollectionRef, docId) {
+      console.log("okok", docId);
+
+      const teacherDocRef = doc(teacherCollectionRef, docId);
+
+      try {
+        const teacherDoc = await getDoc(teacherDocRef);
+
+        console.log(teacherDoc);
+
+        if (teacherDoc.exists()) {
+          console.log("first");
           const teacherData = teacherDoc.data();
-          const email = teacherData.email;
-          const name = teacherData.name;
-          const docId = teacherDoc.id;
 
-          const row = document.createElement("tr");
-          row.innerHTML = `<td>${email}</td><td>${name}</td><td><button id="approveButton_${docId}">Approve</button></td>`;
+          const newTeacherCollectionRef = collection(firestore, "teachers");
+          const newTeacherDocRef = doc(newTeacherCollectionRef, docId);
+          await setDoc(newTeacherDocRef, teacherData);
 
-          teacherListContainer.appendChild(row);
-
-          const approveButton = document.getElementById(
-            `approveButton_${docId}`
-          );
-          approveButton.addEventListener("click", () =>
-            approveTeacher(teacherCollectionRef, docId)
-          );
-        });
-      }
-
-      async function approveTeacher(teacherCollectionRef, docId) {
-        console.log("okok", docId);
-
-        const teacherDocRef = doc(teacherCollectionRef, docId);
-
-        try {
-          const teacherDoc = await getDoc(teacherDocRef);
-
-          console.log(teacherDoc);
-
-          if (teacherDoc.exists()) {
-            console.log("first");
-            const teacherData = teacherDoc.data();
-
-            const newTeacherCollectionRef = collection(firestore, "teachers");
-            const newTeacherDocRef = doc(newTeacherCollectionRef, docId);
-            await setDoc(newTeacherDocRef, teacherData);
-
-            await deleteDoc(teacherDocRef);
-            document.getElementById("teacherList").innerHTML = "";
-            fetchApprovedTeachers();
-          }
-        } catch (error) {
-          console.error("Error fetching document:", error);
+          await deleteDoc(teacherDocRef);
+          document.getElementById("teacherList").innerHTML = "";
+          fetchApprovedTeachers();
         }
+      } catch (error) {
+        console.error("Error fetching document:", error);
       }
+    }
 
-      fetchApprovedTeachers();
-    </script>
-  </body>
+    async function removeTeacher(teacherCollectionRef, docId) {
+      const teacherDocRef = doc(teacherCollectionRef, docId);
+
+      try {
+        await deleteDoc(teacherDocRef);
+        document.getElementById("teacherList").innerHTML = "";
+        fetchApprovedTeachers();
+      } catch (error) {
+        console.error("Error removing document:", error);
+      }
+    }
+
+
+    function openDetailsPage(docId) {
+      window.open(`details.html?id=${docId}`, '_blank');
+    }
+
+    fetchApprovedTeachers();
+
+  </script>
+</body>
+
 </html>
