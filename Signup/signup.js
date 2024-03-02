@@ -8,26 +8,29 @@ import {
   collection,
   addDoc,
   doc,
-  setDoc
+  setDoc,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
-
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyChaQ4bBC3eP21SHvolyQsKCYhoam-HGIw",
-  authDomain: "sample-side-d8f69.firebaseapp.com",
-  projectId: "sample-side-d8f69",
-  storageBucket: "sample-side-d8f69.appspot.com",
-  messagingSenderId: "161040903419",
-  appId: "1:161040903419:web:50d0f5a9ae860f9ce6d45e"
+  apiKey: "AIzaSyA4fg_x-GFnD5TTsDJhdcgPzkiClfnpLh4",
+  authDomain: "project1-1a12a.firebaseapp.com",
+  databaseURL: "https://project1-1a12a-default-rtdb.firebaseio.com",
+  projectId: "project1-1a12a",
+  storageBucket: "project1-1a12a.appspot.com",
+  messagingSenderId: "503658861390",
+  appId: "1:503658861390:web:0ca201b7574cc71004041f",
 };
-
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
-
 
 const signupForm = document.getElementById("signupForm");
 
@@ -40,15 +43,22 @@ signupForm.addEventListener("submit", async (e) => {
   const userName = document.getElementById("username").value;
   const role = document.getElementById("role").value;
 
+  console.log("Form values:", name, email, password, userName, role);
+
   let userData = {
     email: email,
-    role: role
+    role: role,
   };
 
-
-
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    console.log("User credentials:", userCredential.user.uid);
+
     userData = {
       ...userData,
       name: name,
@@ -56,43 +66,61 @@ signupForm.addEventListener("submit", async (e) => {
     };
 
     if (role === "admin") {
-      const adminDocRef = doc(collection(db, "admin"), userCredential.user.uid);
+      const adminDocRef = await doc(
+        collection(db, "admin"),
+        userCredential.user.uid
+      );
       await setDoc(adminDocRef, userData);
     } else if (role === "teacher") {
-      const teacherDocRef = doc(collection(db, "approve_Teacher"), userCredential.user.uid);
+      const teacherDocRef = doc(
+        collection(db, "approve_Teacher"),
+        userCredential.user.uid
+      );
 
       const pictureFile = document.getElementById("teacherPicture").files[0];
 
       let pictureUrl = null;
 
       if (pictureFile) {
-        const pictureRef = ref(storage, `teacherPictures/${email}-${Date.now()}`);
+        const pictureRef = ref(
+          storage,
+          `teacherPictures/${email}-${Date.now()}`
+        );
 
         await uploadBytes(pictureRef, pictureFile);
 
+        console.log("Picture uploaded");
+
         pictureUrl = await getDownloadURL(pictureRef);
+
+        console.log("Picture URl:", pictureUrl);
 
         userData = {
           ...userData,
           degree: document.getElementById("teacherDegree").value,
           experience: document.getElementById("teacherExperience").value,
           subject: document.getElementById("teacherSubject").value,
-          picture: pictureUrl
+          picture: pictureUrl,
         };
       }
 
       userData = {
         ...userData,
-        picture: pictureUrl
+        picture: pictureUrl,
       };
 
       await setDoc(teacherDocRef, userData);
+
+      console.log("Teacher document created");
     } else {
-      const roleDocRef = doc(collection(db, "students"), userCredential.user.uid);
+      const roleDocRef = doc(
+        collection(db, "students"),
+        userCredential.user.uid
+      );
       await setDoc(roleDocRef, userData);
     }
 
-    alert('Signup successful!');
+    alert("Signup successful!");
     // window.location.href = "../Login/login.html";
   } catch (error) {
     console.error("Signup error:", error.message);

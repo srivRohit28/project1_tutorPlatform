@@ -1,96 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Delete Teacher Details</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <h2>Teacher Details</h2>
 
     <div id="detailsContainer">
-        <!-- Teacher details will be added dynamically -->
+      <!-- Teacher details will be added dynamically -->
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-        import {
-            getFirestore,
-            doc,
-            getDoc,
-            collection,
-            deleteDoc
-        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+        collection,
+        deleteDoc,
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyChaQ4bBC3eP21SHvolyQsKCYhoam-HGIw",
-            authDomain: "sample-side-d8f69.firebaseapp.com",
-            projectId: "sample-side-d8f69",
-            storageBucket: "sample-side-d8f69.appspot.com",
-            messagingSenderId: "161040903419",
-            appId: "1:161040903419:web:50d0f5a9ae860f9ce6d45e"
-        };
+      const firebaseConfig = {
+        apiKey: "AIzaSyA4fg_x-GFnD5TTsDJhdcgPzkiClfnpLh4",
+        authDomain: "project1-1a12a.firebaseapp.com",
+        databaseURL: "https://project1-1a12a-default-rtdb.firebaseio.com",
+        projectId: "project1-1a12a",
+        storageBucket: "project1-1a12a.appspot.com",
+        messagingSenderId: "503658861390",
+        appId: "1:503658861390:web:0ca201b7574cc71004041f",
+      };
 
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const firestore = getFirestore(app);
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const firestore = getFirestore(app);
 
-        async function fetchTeacherDetails() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const userId = urlParams.get('id');
+      async function fetchTeacherDetails() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get("id");
 
-            if (!userId) {
-                console.error('No user ID provided in the URL.');
-                return;
-            }
+        if (!userId) {
+          console.error("No user ID provided in the URL.");
+          return;
+        }
 
+        try {
+          const teacherCollectionRef = collection(firestore, "teachers");
+          const teacherDocRef = doc(teacherCollectionRef, userId);
+          const teacherDoc = await getDoc(teacherDocRef);
 
-            try {
-                const teacherCollectionRef = collection(firestore, "teachers")
-                const teacherDocRef = doc(teacherCollectionRef, userId);
-                const teacherDoc = await getDoc(teacherDocRef);
+          if (teacherDoc.exists()) {
+            const teacherData = teacherDoc.data();
 
-                if (teacherDoc.exists()) {
-                    const teacherData = teacherDoc.data();
-
-                    const detailsContainer = document.getElementById("detailsContainer");
-                    detailsContainer.innerHTML = `<p>User ID: ${userId}</p>
+            const detailsContainer =
+              document.getElementById("detailsContainer");
+            detailsContainer.innerHTML = `<p>User ID: ${userId}</p>
                                          <p>Name: ${teacherData.name}</p>
                                          <p>Email: ${teacherData.email}</p>
                                          <img src="${teacherData.picture}" alt="Teacher Image"/>
                                          <button id="removeButton_${userId}">Remove</button>
                                          `;
 
-                    const removeButton = document.getElementById(`removeButton_${userId}`);
-                    removeButton.addEventListener("click", () =>
-                        removeTeacher(teacherCollectionRef, userId)
-                    );
+            const removeButton = document.getElementById(
+              `removeButton_${userId}`
+            );
+            removeButton.addEventListener("click", () =>
+              removeTeacher(teacherCollectionRef, userId)
+            );
 
+            async function removeTeacher(teacherCollectionRef, userId) {
+              const teacherDocRef = doc(teacherCollectionRef, userId);
 
-                    async function removeTeacher(teacherCollectionRef, userId) {
-                        const teacherDocRef = doc(teacherCollectionRef, userId);
-
-                        try {
-                            await deleteDoc(teacherDocRef);
-                            detailsContainer.innerHTML = "Teacher deleted";
-                        } catch (error) {
-                            console.error("Error removing document:", error);
-                        }
-                    }
-
-                } else {
-                    console.error('Teacher document not found.');
-                }
-            } catch (error) {
-                console.error("Error fetching document:", error);
+              try {
+                await deleteDoc(teacherDocRef);
+                detailsContainer.innerHTML = "Teacher deleted";
+              } catch (error) {
+                console.error("Error removing document:", error);
+              }
             }
+          } else {
+            console.error("Teacher document not found.");
+          }
+        } catch (error) {
+          console.error("Error fetching document:", error);
         }
+      }
 
-        fetchTeacherDetails();
+      fetchTeacherDetails();
     </script>
-</body>
-
+  </body>
 </html>

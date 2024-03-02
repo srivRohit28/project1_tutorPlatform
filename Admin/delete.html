@@ -1,64 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Data</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Teacher Data</title>
-</head>
+  <body>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="teacherTableBody"></tbody>
+    </table>
 
-<body>
-  <table border="1">
-    <thead>
-      <tr>
-        <th>User ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="teacherTableBody"></tbody>
-  </table>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+      import {
+        getFirestore,
+        collection,
+        onSnapshot,
+        deleteDoc,
+        doc,
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-    import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import {
-      getFirestore,
-      collection,
-      onSnapshot,
-      deleteDoc,
-      doc,
-    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+      const firebaseConfig = {
+        apiKey: "AIzaSyA4fg_x-GFnD5TTsDJhdcgPzkiClfnpLh4",
+        authDomain: "project1-1a12a.firebaseapp.com",
+        databaseURL: "https://project1-1a12a-default-rtdb.firebaseio.com",
+        projectId: "project1-1a12a",
+        storageBucket: "project1-1a12a.appspot.com",
+        messagingSenderId: "503658861390",
+        appId: "1:503658861390:web:0ca201b7574cc71004041f",
+      };
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyChaQ4bBC3eP21SHvolyQsKCYhoam-HGIw",
-      authDomain: "sample-side-d8f69.firebaseapp.com",
-      projectId: "sample-side-d8f69",
-      storageBucket: "sample-side-d8f69.appspot.com",
-      messagingSenderId: "161040903419",
-      appId: "1:161040903419:web:50d0f5a9ae860f9ce6d45e"
-    };
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+      const firestore = getFirestore(app);
 
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth(app);
-    const firestore = getFirestore(app);
+      function fetchAndDisplayTeacherData() {
+        const teacherTableBody = document.getElementById("teacherTableBody");
 
-    function fetchAndDisplayTeacherData() {
-  const teacherTableBody = document.getElementById('teacherTableBody');
+        const collectionRef = collection(firestore, "teachers");
 
-  const collectionRef = collection(firestore, 'teachers');
+        onSnapshot(collectionRef, (querySnapshot) => {
+          teacherTableBody.innerHTML = "";
 
-  onSnapshot(collectionRef, (querySnapshot) => {
-    teacherTableBody.innerHTML = '';
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const userId = doc.id;
 
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      const userId = doc.id;
-
-      const row = `
+            const row = `
                     <tr>
                         <td>${userId}</td>
                         <td>${data.name}</td>
@@ -69,46 +69,45 @@
                     </tr>
                 `;
 
-      teacherTableBody.innerHTML += row;
-    });
+            teacherTableBody.innerHTML += row;
+          });
 
-    // Add event listeners after the loop
-    const deleteButtons = document.querySelectorAll('.deleteButton');
-    deleteButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const userId = button.getAttribute('data-userid');
-        deleteDocument(userId);
-      });
-    });
+          // Add event listeners after the loop
+          const deleteButtons = document.querySelectorAll(".deleteButton");
+          deleteButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+              const userId = button.getAttribute("data-userid");
+              deleteDocument(userId);
+            });
+          });
 
-    const detailsButtons = document.querySelectorAll('.detailsButton');
-    detailsButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const userId = button.getAttribute('data-userid');
-        openDetailsPage(userId);
-      });
-    });
-  });
-}
-
-    async function deleteDocument(userId) {
-      try {
-        const collectionRef = collection(firestore, 'teachers');
-
-        await deleteDoc(doc(collectionRef, userId));
-
-        console.log('Document deleted successfully!');
-      } catch (error) {
-        console.error('Error deleting document: ', error);
+          const detailsButtons = document.querySelectorAll(".detailsButton");
+          detailsButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+              const userId = button.getAttribute("data-userid");
+              openDetailsPage(userId);
+            });
+          });
+        });
       }
-    }
 
-    function openDetailsPage(userId) {
-      window.open(`deleteDetails.html?id=${userId}`, '_blank');
-    }
+      async function deleteDocument(userId) {
+        try {
+          const collectionRef = collection(firestore, "teachers");
 
-    fetchAndDisplayTeacherData();
-  </script>
-</body>
+          await deleteDoc(doc(collectionRef, userId));
 
+          console.log("Document deleted successfully!");
+        } catch (error) {
+          console.error("Error deleting document: ", error);
+        }
+      }
+
+      function openDetailsPage(userId) {
+        window.open(`deleteDetails.html?id=${userId}`, "_blank");
+      }
+
+      fetchAndDisplayTeacherData();
+    </script>
+  </body>
 </html>

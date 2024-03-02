@@ -1,58 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Signup Page</title>
+    <link rel="stylesheet" href="signup.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Signup Page</title>
-  <link rel="stylesheet" href="signup.css" />
-</head>
+  <body>
+    <div class="container">
+      <form class="signup-form" id="signupForm">
+        <h2>Signup</h2>
+        <input type="text" placeholder="Name" required id="name" />
+        <input type="text" placeholder="Username" required id="username" />
+        <input type="email" placeholder="Email" required id="signupEmail" />
 
-<body>
-  <div class="container">
-    <form class="signup-form" id="signupForm">
-      <h2>Signup</h2>
-      <input type="text" placeholder="Name" required id="name" />
-      <input type="text" placeholder="Username" required id="username" />
-      <input type="email" placeholder="Email" required id="signupEmail" />
+        <label for="role">Select Role:</label>
+        <select id="role" required onchange="toggleTeacherOptions()">
+          <option value="admin">Admin</option>
+          <option value="student">Student</option>
+          <option value="teacher">Teacher</option>
+        </select>
 
-      <label for="role">Select Role:</label>
-      <select id="role" required onchange="toggleTeacherOptions()">
-        <option value="admin">Admin</option>
-        <option value="student">Student</option>
-        <option value="teacher">Teacher</option>
-      </select>
-
-      <div id="teacherOptions" style="display: none;">
-        <input type="file" accept="image/*" id="teacherPicture" />
-        <input type="text" placeholder="Degree" id="teacherDegree" />
-        <input type="text" placeholder="Experience" id="teacherExperience" />
-        <input type="text" placeholder="Subject" id="teacherSubject" />
-      </div>
-
-      <div id="passGroup">
-        <div class="pass">
-          <input type="password" placeholder="Password" required id="signupPassword" />
+        <div id="teacherOptions" style="display: none">
+          <input type="file" accept="image/*" id="teacherPicture" />
+          <input type="text" placeholder="Degree" id="teacherDegree" />
+          <input type="text" placeholder="Experience" id="teacherExperience" />
+          <input type="text" placeholder="Subject" id="teacherSubject" />
         </div>
-        <div class="confirmPass">
-          <input type="password" placeholder="Cofirm Password" required id="confirmPass" />
-        </div>
-      </div>
-      <button type="submit" id="signup">Signup</button>
-    </form>
-  </div>
-  <script src="../Signup/signup.js" type="module"></script>
-  <script>
-    function toggleTeacherOptions() {
-      const roleSelect = document.getElementById("role");
-      const teacherOptions = document.getElementById("teacherOptions");
 
-      if (roleSelect.value === "teacher") {
-        teacherOptions.style.display = "block";
-      } else {
-        teacherOptions.style.display = "none";
+        <div id="passGroup">
+          <div class="pass">
+            <input
+              type="password"
+              placeholder="Password"
+              required
+              id="signupPassword"
+            />
+          </div>
+          <div class="confirmPass">
+            <input
+              type="password"
+              placeholder="Cofirm Password"
+              required
+              id="confirmPass"
+            />
+          </div>
+        </div>
+        <button type="submit" id="signup">Signup</button>
+      </form>
+    </div>
+    <script src="../Signup/signup.js" type="module"></script>
+    <script>
+      function toggleTeacherOptions() {
+        const roleSelect = document.getElementById("role");
+        const teacherOptions = document.getElementById("teacherOptions");
+
+        if (roleSelect.value === "teacher") {
+          teacherOptions.style.display = "block";
+        } else {
+          teacherOptions.style.display = "none";
+        }
       }
-    }
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
