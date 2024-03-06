@@ -1,255 +1,341 @@
-<!-- tutorDetails.html -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tutor Details</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    />
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        padding: 20px;
-      }
 
-      #tutorDetails {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 15px;
-        margin-top: 20px;
-        max-width: 600px;
-      }
-    </style>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutor Details</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
 
-  <body>
-    <h2>Tutor Details</h2>
+    #tutorDetails {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      max-width: 600px;
+    }
+  </style>
+</head>
 
-    <div id="tutorDetails"></div>
-    <button
-      id="bookClass"
-      class="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#registrationModal"
-    >
-      Book Class
-    </button>
+<body>
+  <h2>Tutor Details</h2>
 
-    <div
-      class="modal fade"
-      id="registrationModal"
-      tabindex="-1"
-      aria-labelledby="registrationModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="registrationModalLabel">
-              Book a Demo Class
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form id="bookingForm">
-              <div class="mb-3">
-                <label for="date" class="form-label">Select Date</label>
-                <input type="date" class="form-control" id="date" required />
-              </div>
-              <div class="mb-3">
-                <label for="time" class="form-label">Select Time</label>
-                <select class="form-select" id="time" required>
-                  <option value="" disabled selected>Select Time</option>
-                  <option value="10:00">10:00 AM</option>
-                  <option value="11:00">11:00 AM</option>
-                  <option value="12:00">12:00 PM</option>
-                  <option value="13:00">01:00 PM</option>
-                  <option value="14:00">02:00 PM</option>
-                  <option value="15:00">03:00 PM</option>
-                  <option value="16:00">04:00 PM</option>
-                  <option value="17:00">05:00 PM</option>
-                </select>
-              </div>
-              <button
-                type="submit"
-                class="btn btn-primary"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
-                Submit
-              </button>
-            </form>
-          </div>
+  <div id="tutorDetails"></div>
+  <button id="bookClass" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registrationModal">
+    Book Class
+  </button>
+
+  <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registrationModalLabel">
+            Book a Demo Class
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="bookingForm">
+            <div class="mb-3">
+              <label for="date" class="form-label">Select Date</label>
+              <input type="date" class="form-control" id="date" required />
+            </div>
+            <div class="mb-3">
+              <label for="time" class="form-label">Select Time</label>
+              <select class="form-select" id="time" required>
+                <option value="" disabled selected>Select Time</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="12:00">12:00 PM</option>
+                <option value="13:00">01:00 PM</option>
+                <option value="14:00">02:00 PM</option>
+                <option value="15:00">03:00 PM</option>
+                <option value="16:00">04:00 PM</option>
+                <option value="17:00">05:00 PM</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">
+              Submit
+            </button>
+          </form>
         </div>
       </div>
     </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-      import {
-        getFirestore,
-        collection,
-        doc,
-        setDoc,
-        getDoc,
-      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      doc,
+      setDoc,
+      getDoc,
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyA4fg_x-GFnD5TTsDJhdcgPzkiClfnpLh4",
-        authDomain: "project1-1a12a.firebaseapp.com",
-        databaseURL: "https://project1-1a12a-default-rtdb.firebaseio.com",
-        projectId: "project1-1a12a",
-        storageBucket: "project1-1a12a.appspot.com",
-        messagingSenderId: "503658861390",
-        appId: "1:503658861390:web:0ca201b7574cc71004041f",
-      };
+    const firebaseConfig = {
+      apiKey: "AIzaSyA4fg_x-GFnD5TTsDJhdcgPzkiClfnpLh4",
+      authDomain: "project1-1a12a.firebaseapp.com",
+      databaseURL: "https://project1-1a12a-default-rtdb.firebaseio.com",
+      projectId: "project1-1a12a",
+      storageBucket: "project1-1a12a.appspot.com",
+      messagingSenderId: "503658861390",
+      appId: "1:503658861390:web:0ca201b7574cc71004041f",
+    };
 
-      const app = initializeApp(firebaseConfig);
-      const firestore = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const firestore = getFirestore(app);
 
-      async function fetchTutorDetails(tutorId) {
-        const tutorDetailsDiv = document.getElementById("tutorDetails");
+    async function fetchTutorDetails(tutorId) {
+      const tutorDetailsDiv = document.getElementById("tutorDetails");
 
-        try {
-          const teacherDocRef = doc(firestore, "teachers", tutorId);
-          const teacherDocSnapshot = await getDoc(teacherDocRef);
+      try {
+        const teacherDocRef = doc(firestore, "teachers", tutorId);
+        const teacherDocSnapshot = await getDoc(teacherDocRef);
 
-          if (teacherDocSnapshot.exists()) {
-            const teacherData = teacherDocSnapshot.data();
-            tutorDetailsDiv.innerHTML = `
+        if (teacherDocSnapshot.exists()) {
+          const teacherData = teacherDocSnapshot.data();
+          tutorDetailsDiv.innerHTML = `
                             <img src=${teacherData.picture} alt=${teacherData.name}/>
                             <p><strong>Name:</strong> ${teacherData.name}</p>
                             <p><strong>Email:</strong> ${teacherData.email}</p>
                             <p><strong>Subject:</strong> ${teacherData.subject}</p>
                         `;
-          } else {
-            tutorDetailsDiv.innerHTML = "<p>Teacher not found.</p>";
-          }
-        } catch (error) {
-          console.error("Error fetching tutor details:", error);
-          tutorDetailsDiv.innerHTML = "<p>Error fetching details.</p>";
+        } else {
+          tutorDetailsDiv.innerHTML = "<p>Teacher not found.</p>";
         }
+      } catch (error) {
+        console.error("Error fetching tutor details:", error);
+        tutorDetailsDiv.innerHTML = "<p>Error fetching details.</p>";
+      }
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const tutorId = urlParams.get("id");
+
+    fetchTutorDetails(tutorId);
+
+    document.getElementById("bookingForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const selectedDate = document.getElementById("date").value;
+      const selectedTime = document.getElementById("time").value;
+
+      const userId = getUserId();
+      const tutorId = getTutorId();
+      try {
+        // Check if the user has already booked a class with the specified teacher
+        const isAlreadyBooked = await checkIfAlreadyBooked(userId, tutorId);
+
+        if (isAlreadyBooked) {
+          alert("You have already booked a class with this teacher.");
+        } else {
+          // Save class details to tutorClass and studentClass collections
+          await saveClassDetailsToTutorClass(userId, selectedTime, selectedDate, tutorId);
+          const teacherData = await fetchTutorDetailsForStudentClass(tutorId);
+          await saveClassDetailsToStudentClass(userId, selectedTime, selectedDate, teacherData);
+
+          // Save summary information in the 'summary' collection
+          await saveSummary(userId, tutorId);
+        }
+      } catch (error) {
+        console.error("Error saving class details:", error);
+      }
+    });
+
+    async function checkIfAlreadyBooked(userId, tutorId) {
+      try {
+        const summaryDocRef = doc(collection(firestore, "summary"), userId);
+        const summaryDocSnapshot = await getDoc(summaryDocRef);
+
+        if (summaryDocSnapshot.exists()) {
+          const userData = summaryDocSnapshot.data();
+          return userData.teacherIds && userData.teacherIds.includes(tutorId);
+        }
+
+        return false;
+      } catch (error) {
+        console.error("Error checking if already booked:", error);
+        throw error;
+      }
+    }
+
+    async function saveSummary(userId, tutorId) {
+      const summaryCollectionRef = collection(firestore, "summary");
+      const userDocRef = doc(summaryCollectionRef, userId);
+
+      const summaryData = (await getDoc(userDocRef)).data() || {};
+
+      summaryData.teacherIds = summaryData.teacherIds || [];
+
+      if (!summaryData.teacherIds.includes(tutorId)) {
+        summaryData.teacherIds.push(tutorId);
       }
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const tutorId = urlParams.get("id");
+      await setDoc(userDocRef, summaryData, { merge: true });
+    }
 
-      fetchTutorDetails(tutorId);
-      document
-        .getElementById("bookingForm")
-        .addEventListener("submit", async function (event) {
-          event.preventDefault();
 
-          const selectedDate = document.getElementById("date").value;
-          const selectedTime = document.getElementById("time").value;
 
-          console.log("Selected Date:", selectedDate);
-          console.log("Selected Time:", selectedTime);
+    async function fetchTutorDetailsForStudentClass(tutorId) {
+      try {
+        const teacherDocRef = doc(firestore, "teachers", tutorId);
+        const teacherDocSnapshot = await getDoc(teacherDocRef);
 
-          const userId = getUserId();
-          const tutorId = getTutorId();
-
-          try {
-            await saveClassDetailsToTutorClass(
-              userId,
-              selectedTime,
-              selectedDate,
-              tutorId
-            );
-
-            // Fetch teacher data before calling saveClassDetailsToStudentClass
-            const teacherData = await fetchTutorDetailsForStudentClass(tutorId);
-
-            await saveClassDetailsToStudentClass(
-              userId,
-              selectedTime,
-              selectedDate,
-              teacherData
-            );
-          } catch (error) {
-            console.error("Error saving class details:", error);
-          }
-        });
-
-      async function fetchTutorDetailsForStudentClass(tutorId) {
-        try {
-          const teacherDocRef = doc(firestore, "teachers", tutorId);
-          const teacherDocSnapshot = await getDoc(teacherDocRef);
-
-          if (teacherDocSnapshot.exists()) {
-            return teacherDocSnapshot.data();
-          } else {
-            throw new Error("Teacher not found.");
-          }
-        } catch (error) {
-          console.error(
-            "Error fetching tutor details for student class:",
-            error
-          );
-          throw error;
+        if (teacherDocSnapshot.exists()) {
+          return teacherDocSnapshot.data();
+        } else {
+          throw new Error("Teacher not found.");
         }
+      } catch (error) {
+        console.error(
+          "Error fetching tutor details for student class:",
+          error
+        );
+        throw error;
       }
+    }
 
-      async function saveClassDetailsToTutorClass(
-        userId,
-        selectedTime,
-        selectedDate,
-        tutorId
-      ) {
-        const tutorClassCollectionRef = collection(firestore, "tutorClass");
-        const classDocRef = doc(tutorClassCollectionRef, tutorId);
+    // async function saveClassDetailsToTutorClass(
+    //   userId,
+    //   selectedTime,
+    //   selectedDate,
+    //   tutorId
+    // ) {
+    //   const tutorClassCollectionRef = collection(firestore, "tutorClass");
+    //   const classDocRef = doc(tutorClassCollectionRef, tutorId);
 
-        const classData = {
-          [selectedTime]: {
+    //   const classData = {
+    //     [selectedTime]: {
+    //       userId,
+    //       selectedDate,
+    //     },
+    //   };
+
+    //   await setDoc(classDocRef, classData, { merge: true });
+    // }
+
+    // async function saveClassDetailsToStudentClass(
+    //   userId,
+    //   selectedTime,
+    //   selectedDate,
+    //   teacherData
+    // ) {
+    //   const studentClassCollectionRef = collection(firestore, "studentClass");
+    //   const userDocRef = doc(studentClassCollectionRef, userId);
+
+    //   const classData = {
+    //     [selectedTime]: {
+    //       selectedDate,
+    //       teacherData,
+    //     },
+    //   };
+
+    //   await setDoc(userDocRef, classData, { merge: true });
+    // }
+    async function saveClassDetailsToTutorClass(userId, selectedTime, selectedDate, tutorId) {
+      const tutorClassCollectionRef = collection(firestore, "tutorClass");
+      const classDocRef = doc(tutorClassCollectionRef, tutorId);
+
+      try {
+        const classDocSnapshot = await getDoc(classDocRef);
+        const existingData = classDocSnapshot.data() || {};
+
+        const classDataArray = existingData.classData || [];
+
+        const existingEntryIndex = classDataArray.findIndex(entry => entry.selectedDate === selectedDate);
+
+        if (existingEntryIndex !== -1) {
+          classDataArray[existingEntryIndex].selectedTimes.push(selectedTime);
+        } else {
+          const newEntry = {
+            selectedDate,
+            selectedTimes: selectedTime,
             userId,
-            selectedDate,
-          },
-        };
+          };
 
-        await setDoc(classDocRef, classData, { merge: true });
+          classDataArray.push(newEntry);
+        }
+
+        await setDoc(classDocRef, { classData: classDataArray }, { merge: true });
+
+        console.log("done");
+      } catch (error) {
+        console.error(error);
       }
+    }
 
-      async function saveClassDetailsToStudentClass(
-        userId,
-        selectedTime,
-        selectedDate,
-        teacherData
-      ) {
-        const studentClassCollectionRef = collection(firestore, "studentClass");
-        const userDocRef = doc(studentClassCollectionRef, userId);
+    async function saveClassDetailsToStudentClass(userId, selectedTime, selectedDate, teacherData) {
+      const studentClassCollectionRef = collection(firestore, "studentClass");
+      const classDocRef = doc(studentClassCollectionRef, userId);
 
-        const classData = {
-          [selectedTime]: {
-            selectedDate,
-            teacherData,
-          },
-        };
+      try {
+        const classDocSnapshot = await getDoc(classDocRef);
+        const existingData = classDocSnapshot.data() || {};
 
-        await setDoc(userDocRef, classData, { merge: true });
+        const classDataArray = existingData.classData || [];
+
+        const existingEntryIndex = classDataArray.findIndex(entry => entry.selectedDate === selectedDate);
+
+        if (existingEntryIndex !== -1) {
+          classDataArray[existingEntryIndex].selectedTimes.push(selectedTime);
+        } else {
+          const classData = {
+              selectedTimes: selectedTime,
+              teacherData,
+              selectedDate,
+          };
+
+          classDataArray.push(classData);
+        }
+
+      await setDoc(classDocRef,  { classData: classDataArray }, { merge: true });
+
+        console.log("done");
+      } catch (error) {
+        console.error(error);
       }
+    }
 
-      function getUserId() {
-        return localStorage.getItem("uid");
-      }
+    // Uncommented the saveClassDetailsToStudentClass function
+    // async function saveClassDetailsToStudentClass(userId, selectedTime, selectedDate, teacherData) {
+    //   const studentClassCollectionRef = collection(firestore, "studentClass");
+    //   const userDocRef = doc(studentClassCollectionRef, userId);
 
-      function getTutorId() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const teacherId = urlParams.get("id");
-        console.log(teacherId);
+    //   const classData = {
+    //     [selectedTime]: {
+    //       selectedDate,
+    //       teacherData,
+    //     },
+    //   };
 
-        return teacherId;
-      }
-    </script>
-  </body>
+    //   await setDoc(userDocRef, classData, { merge: true });
+    // }
+
+
+
+
+    function getUserId() {
+      return localStorage.getItem("uid");
+    }
+
+    function getTutorId() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const teacherId = urlParams.get("id");
+      console.log(teacherId);
+
+      return teacherId;
+    }
+  </script>
+</body>
+
 </html>
