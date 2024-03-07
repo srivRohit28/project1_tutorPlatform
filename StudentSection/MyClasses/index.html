@@ -1,20 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Classes</title>
-  </head>
-  <body>
-    <table>
-      <thead>
-        <th>S.No</th>
-        <th>Subject</th>
-        <th>Tutor</th>
-        <th>Class Time</th>
-      </thead>
-      <tbody id="classes-table"></tbody>
-    </table>
-    <script></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classes</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .class-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 10px;
+      width: 300px;
+      display: inline-block;
+    }
+
+    .teacher-image {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA4fg_x-GFnD5TTsDJhdcgPzkiClfnpLh4",
+      authDomain: "project1-1a12a.firebaseapp.com",
+      databaseURL: "https://project1-1a12a-default-rtdb.firebaseio.com",
+      projectId: "project1-1a12a",
+      storageBucket: "project1-1a12a.appspot.com",
+      messagingSenderId: "503658861390",
+      appId: "1:503658861390:web:0ca201b7574cc71004041f",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const firestore = getFirestore(app);
+
+    const userId = localStorage.getItem("uid");
+
+    if (userId) {
+      const studentClassesRef = collection(firestore, "studentClass");
+      const sudDOcRef = doc(studentClassesRef, userId);
+
+      const displayClassData = (classData) => {
+        const classContainer = document.getElementById("classContainer");
+
+        classData.forEach((classItem) => {
+          const card = document.createElement("div");
+          card.classList.add("class-card", "card");
+
+          card.innerHTML = `
+            <img src="${classItem.teacherData.picture}" alt="Teacher Image" class="teacher-image card-img-top"/>
+            <div class="card-body">
+              <h5 class="card-title">${classItem.teacherData.name}</h5>
+              <p class="card-text">Subject: ${classItem.teacherData.subject}</p>
+              <p class="card-text">Date: ${classItem.selectedDate}</p>
+              <p class="card-text">Time: ${classItem.selectedTimes}</p>
+            </div>
+          `;
+
+          classContainer.appendChild(card);
+        });
+      };
+
+      const fetchData = async () => {
+        try {
+          const querySnapshot = await getDoc(sudDOcRef);
+          const classData = querySnapshot.data().classData;
+
+          if (classData) {
+            displayClassData(classData);
+          } else {
+            console.log("No class data available for the user.");
+          }
+        } catch (error) {
+          console.error("Error fetching classes:", error);
+        }
+      };
+
+      fetchData();
+    } else {
+      console.error("User ID not found in localStorage");
+    }
+  </script>
+
+  <div id="classContainer" class="container mt-4"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>
