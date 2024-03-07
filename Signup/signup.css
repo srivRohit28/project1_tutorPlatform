@@ -6,7 +6,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-image: url("../erik-mclean-unsplash.jpg");
+  background: url(../erik-mclean-unsplash.jpg);
   background-size: cover;
   background-position: center;
   display: flex;
