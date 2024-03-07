@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import {
   getAuth,
   createUserWithEmailAndPassword,
+  updateProfile
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import {
   getFirestore,
@@ -64,6 +65,10 @@ signupForm.addEventListener("submit", async (e) => {
       name: name,
       userName: userName,
     };
+
+    await updateProfile(auth.currentUser, {
+      displayName: name,
+    });
 
     if (role === "admin") {
       const adminDocRef = await doc(

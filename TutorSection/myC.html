@@ -62,16 +62,19 @@
                 const thead = document.createElement("thead");
                 thead.innerHTML = `
                     <tr>
+                        <th>SN</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
                         <th>Date</th>
                         <th>Time</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Username</th>
                     </tr>
                 `;
                 table.appendChild(thead);
 
                 const tbody = document.createElement("tbody");
+
+                let snn = 0
 
                 for (const classItem of classData) {
                     const studentDocRef = doc(firestore, "students", classItem.userId);
@@ -81,11 +84,12 @@
                         const studentData = studentDocSnapshot.data();
                         const row = document.createElement("tr");
                         row.innerHTML = `
+                        <td>${snn += 1}</td>
+                        <td>${studentData.name}</td>
+                        <td>${studentData.userName}</td>
+                        <td>${studentData.email}</td>
                             <td>${classItem.selectedDate}</td>
                             <td>${classItem.selectedTimes}</td>
-                            <td>${studentData.name}</td>
-                            <td>${studentData.email}</td>
-                            <td>${studentData.userName}</td>
                         `;
                         tbody.appendChild(row);
                     } else {
