@@ -22,48 +22,51 @@
   </style>
 </head>
 
-<body>
-  <h2>Tutor Details</h2>
+<body class="bg-light">
+  <div class="container mt-4">
+    <h2 class="text-center">Tutor Details</h2>
 
-  <div id="tutorDetails"></div>
-  <button id="bookClass" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registrationModal">
-    Book Class
-  </button>
+    <div id="tutorDetails" class="mx-auto bg-white p-4 rounded"></div>
 
-  <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="registrationModalLabel">
-            Book a Demo Class
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="bookingForm">
-            <div class="mb-3">
-              <label for="date" class="form-label">Select Date</label>
-              <input type="date" class="form-control" id="date" required />
-            </div>
-            <div class="mb-3">
-              <label for="time" class="form-label">Select Time</label>
-              <select class="form-select" id="time" required>
-                <option value="" disabled selected>Select Time</option>
-                <option value="10:00">10:00 AM</option>
-                <option value="11:00">11:00 AM</option>
-                <option value="12:00">12:00 PM</option>
-                <option value="13:00">01:00 PM</option>
-                <option value="14:00">02:00 PM</option>
-                <option value="15:00">03:00 PM</option>
-                <option value="16:00">04:00 PM</option>
-                <option value="17:00">05:00 PM</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">
-              Submit
-            </button>
-          </form>
+    <!-- <button id="bookClass" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#registrationModal">
+      Book Class
+    </button> -->
+
+    <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="registrationModalLabel">
+              Book a Demo Class
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="bookingForm">
+              <div class="mb-3">
+                <label for="date" class="form-label">Select Date</label>
+                <input type="date" class="form-control" id="date" required />
+              </div>
+              <div class="mb-3">
+                <label for="time" class="form-label">Select Time</label>
+                <select class="form-select" id="time" required>
+                  <option value="" disabled selected>Select Time</option>
+                  <option value="10:00">10:00 AM</option>
+                  <option value="11:00">11:00 AM</option>
+                  <option value="12:00">12:00 PM</option>
+                  <option value="13:00">01:00 PM</option>
+                  <option value="14:00">02:00 PM</option>
+                  <option value="15:00">03:00 PM</option>
+                  <option value="16:00">04:00 PM</option>
+                  <option value="17:00">05:00 PM</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -105,12 +108,21 @@
         if (teacherDocSnapshot.exists()) {
           const teacherData = teacherDocSnapshot.data();
           tutorDetailsDiv.innerHTML = `
-                            <img src=${teacherData.picture} alt=${teacherData.name}/>
-                            <p><strong>Name:</strong> ${teacherData.name}</p>
-                            <p><strong>Email:</strong> ${teacherData.email}</p>
-                            <p><strong>Subject:</strong> ${teacherData.subject}</p>
-                        `;
-        } else {
+        <div class="card">
+            <img src="${teacherData.picture}" class="card-img-top" alt="${teacherData.name}" />
+            <div class="card-body">
+                <h5 class="card-title">${teacherData.name}</h5>
+                <p class="card-text"><strong>Email:</strong> ${teacherData.email}</p>
+                <p class="card-text"><strong>Subject:</strong> ${teacherData.subject}</p>
+                <button id="bookClass" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#registrationModal">
+                    Book Class
+                </button>
+            </div>
+        </div>
+    `;
+        }
+
+        else {
           tutorDetailsDiv.innerHTML = "<p>Teacher not found.</p>";
         }
       } catch (error) {
@@ -290,15 +302,15 @@
           classDataArray[existingEntryIndex].selectedTimes.push(selectedTime);
         } else {
           const classData = {
-              selectedTimes: selectedTime,
-              teacherData,
-              selectedDate,
+            selectedTimes: selectedTime,
+            teacherData,
+            selectedDate,
           };
 
           classDataArray.push(classData);
         }
 
-      await setDoc(classDocRef,  { classData: classDataArray }, { merge: true });
+        await setDoc(classDocRef, { classData: classDataArray }, { merge: true });
 
         console.log("done");
       } catch (error) {

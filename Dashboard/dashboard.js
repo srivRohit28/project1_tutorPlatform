@@ -15,6 +15,22 @@ const firebaseConfig = {
   appId: "1:503658861390:web:0ca201b7574cc71004041f",
 };
 
+const roleType = (JSON.parse(localStorage.getItem("userD"))).userType || "login";
+const allRoleElements = document.getElementsByClassName("roleType");
+
+console.log(roleType);
+
+for (let i = 0; i < allRoleElements.length; i++) {
+  allRoleElements[i].style.display = "none";
+}
+
+const roleSpecificElements = document.getElementsByClassName(roleType);
+for (let i = 0; i < roleSpecificElements.length; i++) {
+  roleSpecificElements[i].style.display = "block";
+}
+
+
+
 // Initialize Firebase app
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app); // Get Firebase Authentication instance
@@ -28,10 +44,14 @@ function displayUserInfo(user) {
     // Update HTML elements with user information
     document.querySelector("#user-name").textContent = displayName;
     document.querySelector("#user-email").textContent = email;
+    console.log(displayName, email)
+    console.log("on have")
   } else {
     // User is not logged in, clear the information
     document.querySelector("#user-name").textContent = "";
     document.querySelector("#user-email").textContent = "";
+    console.log(" ok no on have")
+
   }
 }
 
