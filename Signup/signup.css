@@ -1,4 +1,4 @@
- * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -93,7 +93,6 @@ button:hover {
   background-color: #0056b3;
 }
 
-
 #roleContainer {
   margin-bottom: 20px;
   margin-bottom: 20px;
@@ -101,7 +100,7 @@ button:hover {
 
 #roleLabel {
   margin-bottom: 5px;
-  margin-bottom: 5px; 
+  margin-bottom: 5px;
   color: #3d9dec;
 }
 
