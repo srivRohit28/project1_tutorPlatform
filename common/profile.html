@@ -80,7 +80,10 @@
                 return;
             }
 
-            const userCollectionRef = collection(firestore, `${userType}s`);
+            const roleeee = userType === "admin" ? userType : `${userType}s`
+            console.log(roleeee)
+
+            const userCollectionRef = collection(firestore, roleeee);
             const userDocRef = doc(userCollectionRef, userId);
 
             console.log(userType, userId)

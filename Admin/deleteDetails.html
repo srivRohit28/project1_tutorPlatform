@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="deleteDetails.css">
     <title>Delete Teacher Details</title>
   </head>
 
@@ -10,7 +11,6 @@
     <h2>Teacher Details</h2>
 
     <div id="detailsContainer">
-      <!-- Teacher details will be added dynamically -->
     </div>
 
     <script type="module">
@@ -48,6 +48,7 @@
         }
 
         try {
+          console.log(userId)
           const teacherCollectionRef = collection(firestore, "teachers");
           const teacherDocRef = doc(teacherCollectionRef, userId);
           const teacherDoc = await getDoc(teacherDocRef);
@@ -60,7 +61,7 @@
             detailsContainer.innerHTML = `<p>User ID: ${userId}</p>
                                          <p>Name: ${teacherData.name}</p>
                                          <p>Email: ${teacherData.email}</p>
-                                         <img src="${teacherData.picture}" alt="Teacher Image"/>
+                                         <img src="${teacherData.picture}" alt="Teacher Image"/><br/>
                                          <button id="removeButton_${userId}">Remove</button>
                                          `;
 

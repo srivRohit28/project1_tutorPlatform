@@ -52,6 +52,18 @@ input[type="email"] {
   height: 40px;
 }
 
+a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #007bff; /* Link color */
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #0056b3; /* Hover color */
+}
+
 button {
   background-color: #007bff;
   color: #fff;

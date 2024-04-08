@@ -93,6 +93,18 @@ button:hover {
   background-color: #0056b3;
 }
 
+a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #007bff; /* Link color */
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #0056b3; /* Hover color */
+}
+
 #roleContainer {
   margin-bottom: 20px;
   margin-bottom: 20px;

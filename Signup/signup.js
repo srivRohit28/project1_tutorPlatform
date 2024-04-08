@@ -108,6 +108,7 @@ signupForm.addEventListener("submit", async (e) => {
           picture: pictureUrl,
         };
       }
+      console.log("userData", userData);
 
       userData = {
         ...userData,
@@ -126,7 +127,7 @@ signupForm.addEventListener("submit", async (e) => {
     }
 
     alert("Signup successful!");
-    // window.location.href = "../Login/login.html";
+    window.location.href = "../Login/login.html";
   } catch (error) {
     console.error("Signup error:", error.message);
   }
