@@ -69,7 +69,7 @@
         </ul>
         <ul>
           <li onclick="fnLogout()">
-            <a href="/Login/login.html">
+            <!-- <a href="/Login/login.html"> -->
               <i class="fa-solid fa-right-from-bracket"></i>
               <p>Logout</p>
             </a>
@@ -81,8 +81,7 @@
     <script>
       function fnLogout() {
         localStorage.clear();
-        window.location.href = "../login/login.html";
-
+        window.location.href = "/Login/login.html";
         alert("logout");
       }
     </script>
