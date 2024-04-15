@@ -29,32 +29,32 @@
             </a>
           </li>
           <li class="student roleType">
-            <a href="../StudentSection/BookClass/index.html" target="_blank">
+            <a href="../StudentSection/BookClass/index.html">
               <i class="fa-solid fa-swatchbook"></i>
               <p>Book Class</p>
             </a>
           </li>
           <li class="student roleType">
-            <a href="../StudentSection/MyClasses/index.html" target="_blank">
+            <a href="../StudentSection/MyClasses/index.html">
               <i class="fa-solid fa-book-open-reader"></i>
               <p>My Classes</p>
             </a>
           </li>
           <li class="teacher roleType">
-            <a href="../TutorSection/myC.html" target="_blank">
+            <a href="../TutorSection/myC.html">
               <i class="fa-solid fa-book-open-reader"></i>
               <p>My Classes</p>
             </a>
           </li>
           <li class="admin roleType">
-            <a href="../Admin/approve.html" target="_blank">
+            <a href="../Admin/approve.html">
               <i class="fa-solid fa-book-open-reader"></i>
               <p>Approve Classes</p>
             </a>
           </li>
 
           <li class="admin roleType">
-            <a href="../Admin/delete.html" target="_blank">
+            <a href="../Admin/delete.html">
               <i class="fa-solid fa-book-open-reader"></i>
               <p>Delete Classes</p>
             </a>
@@ -68,7 +68,7 @@
           </li>
         </ul>
         <ul>
-          <li>
+          <li onclick="fnLogout()">
             <a href="/Login/login.html">
               <i class="fa-solid fa-right-from-bracket"></i>
               <p>Logout</p>
@@ -78,5 +78,13 @@
       </div>
     </div>
     <script type="module" src="./dashboard.js"></script>
+    <script>
+      function fnLogout() {
+        localStorage.clear();
+        window.location.href = "login.html";
+
+        alert("logout");
+      }
+    </script>
   </body>
 </html>

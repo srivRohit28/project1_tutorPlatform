@@ -51,6 +51,13 @@ function displayUserInfo(user) {
   }
 }
 
+function fnLogout() {
+  localStorage.clear();
+  window.location.href = "login.html";
+
+  alert("logout");
+}
+
 onAuthStateChanged(auth, (user) => {
   displayUserInfo(user);
 });
