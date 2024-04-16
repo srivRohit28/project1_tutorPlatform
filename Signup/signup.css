@@ -97,12 +97,12 @@ a {
   display: block;
   text-align: center;
   text-decoration: none;
-  color: #007bff; /* Link color */
+  color: #007bff; 
   transition: color 0.3s ease;
 }
 
 a:hover {
-  color: #0056b3; /* Hover color */
+  color: #0056b3; 
 }
 
 #roleContainer {
@@ -121,6 +121,10 @@ a:hover {
   height: 40px;
   border-radius: 5px;
   border: 1px solid #ccc;
+}
+
+input[type="file"] {
+  margin-bottom: 20px;
 }
 
 @media (max-width: 480px) {
