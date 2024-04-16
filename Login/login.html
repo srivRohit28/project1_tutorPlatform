@@ -4,6 +4,19 @@
     <meta charset="UTF-8" />
     <title>Login Page</title>
     <link rel="stylesheet" href="login.css" />
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const userData = localStorage.getItem("userD");
+        if (userData) {
+          console.log(userData);
+          const user = JSON.parse(userData);
+          if (user.userId && user.userType) {
+            console.log(user);
+            window.location.href = "../Dashboard/dashboard.html";
+          }
+        }
+      });
+    </script>
   </head>
 
   <body>

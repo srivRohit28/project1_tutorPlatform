@@ -9,6 +9,16 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <script>  
+      document.addEventListener('DOMContentLoaded', () => {  
+     const userData = localStorage.getItem('userD')
+     if (!userData || userData===null) {
+      window.location.href = "../Login/login.html"
+
+     }
+    }
+    )
+      </script>  
   </head>
 
   <body>
@@ -81,7 +91,7 @@
     <script>
       function fnLogout() {
         localStorage.clear();
-        alert("logout");
+        alert("Logged out!");
       }
     </script>
   </body>
