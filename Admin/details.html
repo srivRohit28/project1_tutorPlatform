@@ -59,6 +59,9 @@
               document.getElementById("detailsContainer");
             detailsContainer.innerHTML = `<p>Email: ${teacherData.email}</p>
                                          <p>Name: ${teacherData.name}</p>
+                                         <p>Subject: ${teacherData.subject}</p>
+                                         <p>Degree: ${teacherData.degree}</p>
+                                         <p>Experience: ${teacherData.experience}</p>
                                          <img src="${teacherData.picture}" alt="Teacher Image"/>`;
           } else {
             console.error("Teacher document not found.");
