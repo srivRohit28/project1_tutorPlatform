@@ -44,8 +44,6 @@ signupForm.addEventListener("submit", async (e) => {
   const userName = document.getElementById("username").value;
   const role = document.getElementById("role").value;
 
-  console.log("Form values:", name, email, password, userName, role);
-
   let userData = {
     email: email,
     role: role,
@@ -57,8 +55,6 @@ signupForm.addEventListener("submit", async (e) => {
       email,
       password
     );
-
-    console.log("User credentials:", userCredential.user.uid);
 
     userData = {
       ...userData,
@@ -94,30 +90,27 @@ signupForm.addEventListener("submit", async (e) => {
 
         await uploadBytes(pictureRef, pictureFile);
 
-        console.log("Picture uploaded");
-
         pictureUrl = await getDownloadURL(pictureRef);
-
-        console.log("Picture URl:", pictureUrl);
-
-        userData = {
-          ...userData,
-          degree: document.getElementById("teacherDegree").value,
-          experience: document.getElementById("teacherExperience").value,
-          subject: document.getElementById("teacherSubject").value,
-          picture: pictureUrl,
-        };
       }
-      console.log("userData", userData);
+
+      let subjects = [];
+      document.querySelectorAll(".subjectInput").forEach((input, index) => {
+        const subject = input.value.trim();
+        const description = document.querySelectorAll(".descriptionInput")[index].value.trim();
+        if (subject !== "") {
+          subjects.push({ subject, description, id: Math.floor(Math.random() * 9000) + 1000 });
+        }
+      });
 
       userData = {
         ...userData,
+        degree: document.getElementById("teacherDegree").value,
+        experience: document.getElementById("teacherExperience").value,
         picture: pictureUrl,
+        subjects: subjects,
       };
 
       await setDoc(teacherDocRef, userData);
-
-      console.log("Teacher document created");
     } else {
       const roleDocRef = doc(
         collection(db, "students"),

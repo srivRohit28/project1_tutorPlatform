@@ -9,16 +9,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-    <script>  
-      document.addEventListener('DOMContentLoaded', () => {  
-     const userData = localStorage.getItem('userD')
-     if (!userData || userData===null) {
-      window.location.href = "../Login/login.html"
-
-     }
-    }
-    )
-      </script>  
   </head>
 
   <body>
@@ -39,7 +29,7 @@
             </a>
           </li>
           <li class="student roleType">
-            <a href="../StudentSection/BookClass/index.html">
+            <a href="../StudentSection/tutorList/tutorList.html">
               <i class="fa-solid fa-swatchbook"></i>
               <p>Book Class</p>
             </a>
@@ -56,6 +46,19 @@
               <p>My Classes</p>
             </a>
           </li>
+          <li class="teacher roleType">
+            <a href="../TutorSection/manage_subjects.html">
+              <i class="fa-solid fa-book-open-reader"></i>
+              <p>Manage classes</p>
+            </a>
+          </li>
+          <li class="admin roleType">
+            <a href="../Admin/createTeach/create.html">
+              <i class="fa-solid fa-book-open-reader"></i>
+              <p>Register Teacher</p>
+            </a>
+          </li>
+
           <li class="admin roleType">
             <a href="../Admin/approve.html">
               <i class="fa-solid fa-book-open-reader"></i>
@@ -91,7 +94,7 @@
     <script>
       function fnLogout() {
         localStorage.clear();
-        alert("Logged out!");
+        alert("logout");
       }
     </script>
   </body>

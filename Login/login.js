@@ -86,4 +86,4 @@ loginForm.addEventListener("submit", async (e) => {
   } catch (error) {
     alert(`Error: ${error.message}`);
   }
-});
+})
