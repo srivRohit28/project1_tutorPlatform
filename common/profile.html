@@ -55,7 +55,7 @@
                   placeholder="Enter your name"
                 />
               </div>
-              <!-- added email editing -->
+
               <div class="mb-3">
                 <label for="emailInput" class="form-label">Email</label>
                 <input
@@ -198,7 +198,7 @@
           } else {
             console.error("Name not found in user data for edit.");
           }
-          // added email editing
+
           const emailInput = document.getElementById("emailInput");
           if (userDataForEdit.hasOwnProperty("email")) {
             emailInput.value = userDataForEdit.email;
@@ -213,13 +213,13 @@
           event.preventDefault();
 
           const updatedName = document.getElementById("nameInput").value;
-          const updatedEmail = document.getElementById("emailInput").value; //edited
+          const updatedEmail = document.getElementById("emailInput").value; 
           const userDataForEditString = localStorage.getItem("userDataForEdit");
           const userDataForEdit = JSON.parse(userDataForEditString);
 
           userDataForEdit.name = updatedName;
           
-          userDataForEdit.email = updatedEmail; // edited
+          userDataForEdit.email = updatedEmail; 
           try {
             const userCollectionRef = collection(
               firestore,
