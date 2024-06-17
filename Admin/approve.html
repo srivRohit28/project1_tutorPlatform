@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="approve.css">
-  <title>List Approved Teachers</title>
+  <title>List of Approved Teachers</title>
 </head>
 <style>
   .idk{
@@ -14,7 +14,7 @@
 </style>
 
 <body>
-  <h2>Approved Teachers</h2>
+  <h2>Teachers To Be Approved</h2>
 
   <table border="1">
     <thead>
@@ -30,7 +30,7 @@
     </tbody>
 
   </table>
-  Approved Teacher
+  <h2>Approved Teacher</h2>
   <iframe src="./delete.html" frameborder="0" class="idk"></iframe>
 
   <script type="module">
@@ -70,8 +70,8 @@
         const teacherData = teacherDoc.data();
         const email = teacherData.email;
         const name = teacherData.name;
-        const subjectsArray = teacherData.subjects || []; // Get subjects array or empty array if not defined
-        const subjects = subjectsArray.join(", "); // Join subjects array with commas
+        const subjectsArray = teacherData.subjects || [];
+        const subjects = subjectsArray.map(subject => subject.subject).join(", "); // Extract subject names and join with commas
         const docId = teacherDoc.id;
 
         const row = document.createElement("tr");
