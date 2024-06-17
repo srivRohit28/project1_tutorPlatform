@@ -96,9 +96,15 @@ signupForm.addEventListener("submit", async (e) => {
       let subjects = [];
       document.querySelectorAll(".subjectInput").forEach((input, index) => {
         const subject = input.value.trim();
-        const description = document.querySelectorAll(".descriptionInput")[index].value.trim();
+        const description = document
+          .querySelectorAll(".descriptionInput")
+          [index].value.trim();
         if (subject !== "") {
-          subjects.push({ subject, description, id: Math.floor(Math.random() * 9000) + 1000 });
+          subjects.push({
+            subject,
+            description,
+            id: Math.floor(Math.random() * 9000) + 1000,
+          });
         }
       });
 

@@ -32,10 +32,14 @@ loginForm.addEventListener("submit", async (e) => {
   const password = document.getElementById("loginPassword").value;
 
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     const userId = userCredential.user.uid;
 
-    console.log(userId)
+    console.log(userId);
 
     const adminDocRef = doc(collection(firestore, "admin"), userId);
     const adminDoc = await getDoc(adminDocRef);
@@ -57,7 +61,6 @@ loginForm.addEventListener("submit", async (e) => {
       localStorage.setItem("uid", userId);
 
       alert("Login successful as a teacher!");
-
     } else if (adminDoc.exists()) {
       userDetails = {
         userId: userId,
@@ -67,7 +70,6 @@ loginForm.addEventListener("submit", async (e) => {
       localStorage.setItem("uid", userId);
 
       alert("Login successful as a admin!");
-
     } else if (studentDoc.exists()) {
       userDetails = {
         userId: userId,
@@ -86,4 +88,4 @@ loginForm.addEventListener("submit", async (e) => {
   } catch (error) {
     alert(`Error: ${error.message}`);
   }
-})
+});

@@ -34,14 +34,14 @@ const auth = getAuth(app);
 
 function displayUserInfo(user) {
   if (user) {
-    console.log('user', user)
+    console.log("user", user);
     const displayName = user.displayName;
     const email = user.email;
     // const displayphoto = user.
 
     document.querySelector("#user-name").textContent = displayName;
     document.querySelector("#user-email").textContent = email;
-    document.querySelector("")
+    document.querySelector("");
     console.log(displayName, email);
     console.log("on have");
   } else {

@@ -10,17 +10,28 @@
     <div class="container">
       <form class="signup-form" id="signupForm">
         <h2>Signup</h2>
-        <input type="text" placeholder="Name" required id="name" />
-        <input type="text" placeholder="Username" required id="username" />
-        <input type="email" placeholder="Email" required id="signupEmail" />
-
+        <div class="form-row">
+          <input type="text" placeholder="Name" required id="name" />
+          <input type="text" placeholder="Username" required id="username" />
+        </div>
+        <input
+          type="email"
+          placeholder="Email"
+          required
+          id="signupEmail"
+          class="full-width"
+        />
         <label for="role">Select Role:</label>
-        <select id="role" required onchange="toggleTeacherOptions()">
+        <select
+          id="role"
+          required
+          onchange="toggleTeacherOptions()"
+          class="full-width"
+        >
           <option value="admin">Admin</option>
           <option value="student">Student</option>
           <option value="teacher">Teacher</option>
         </select>
-
         <div id="teacherOptions" style="display: none">
           <input type="file" accept="image/*" id="teacherPicture" />
           <input type="text" placeholder="Degree" id="teacherDegree" />
@@ -28,29 +39,30 @@
           <div id="subjectFields">
             <div class="subjectInputWrapper">
               <input type="text" placeholder="Subject 1" class="subjectInput" />
-              <input type="text" placeholder="Description" class="descriptionInput" />
+              <input
+                type="text"
+                placeholder="Description"
+                class="descriptionInput"
+              />
             </div>
           </div>
-          <button type="button" onclick="addSubjectInput()">+</button>
+          <button type="button" class="add-subject" onclick="addSubjectInput()">
+            +
+          </button>
         </div>
-
-        <div id="passGroup">
-          <div class="pass">
-            <input
-              type="password"
-              placeholder="Password"
-              required
-              id="signupPassword"
-            />
-          </div>
-          <div class="confirmPass">
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              required
-              id="confirmPass"
-            />
-          </div>
+        <div class="form-row">
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            id="signupPassword"
+          />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            required
+            id="confirmPass"
+          />
         </div>
         <button type="submit" id="signup">Signup</button>
       </form>

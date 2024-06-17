@@ -213,13 +213,13 @@
           event.preventDefault();
 
           const updatedName = document.getElementById("nameInput").value;
-          const updatedEmail = document.getElementById("emailInput").value; 
+          const updatedEmail = document.getElementById("emailInput").value;
           const userDataForEditString = localStorage.getItem("userDataForEdit");
           const userDataForEdit = JSON.parse(userDataForEditString);
 
           userDataForEdit.name = updatedName;
-          
-          userDataForEdit.email = updatedEmail; 
+
+          userDataForEdit.email = updatedEmail;
           try {
             const userCollectionRef = collection(
               firestore,
