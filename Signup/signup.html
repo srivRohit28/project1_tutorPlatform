@@ -12,7 +12,9 @@
         <h2>Signup</h2>
         <div class="form-row">
           <input type="text" placeholder="Name" required id="name" />
+          <div id="nameError" class="error-message"></div>
           <input type="text" placeholder="Username" required id="username" />
+          <div id="usernameError" class="error-message"></div>
         </div>
         <input
           type="email"
@@ -21,6 +23,7 @@
           id="signupEmail"
           class="full-width"
         />
+        <div id="emailError" class="error-message"></div>
         <label for="role">Select Role:</label>
         <select
           id="role"

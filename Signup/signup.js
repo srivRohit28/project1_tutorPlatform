@@ -35,6 +35,52 @@ const storage = getStorage(app);
 
 const signupForm = document.getElementById("signupForm");
 
+const nameInput = document.getElementById("name");
+const usernameInput = document.getElementById("username");
+const emailInput = document.getElementById("signupEmail");
+const nameError = document.getElementById("nameError");
+const usernameError = document.getElementById("usernameError");
+const emailError = document.getElementById("emailError");
+
+function validateName(name) {
+  const nameRegex = /^[A-Za-z]+$/;
+  return nameRegex.test(name);
+}
+
+function validateUsername(username) {
+  const usernameRegex = /^[A-Za-z0-9@._-]+$/;
+  return usernameRegex.test(username);
+}
+
+function validateEmail(email) {
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z]+\.[A-Za-z]+$/;
+  return emailRegex.test(email);
+}
+
+nameInput.addEventListener("input", () => {
+  if (!validateName(nameInput.value)) {
+    nameError.textContent = "Name must contain only alphabetic characters.";
+  } else {
+    nameError.textContent = "";
+  }
+});
+
+usernameInput.addEventListener("input", () => {
+  if (!validateUsername(usernameInput.value)) {
+    usernameError.textContent = "Username can only contain alphanumeric characters and @ . _ -";
+  } else {
+    usernameError.textContent = "";
+  }
+});
+
+emailInput.addEventListener("input", () => {
+  if (!validateEmail(emailInput.value)) {
+    emailError.textContent = "Email must be in the format yourname@domain.com";
+  } else {
+    emailError.textContent = "";
+  }
+});
+
 signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -43,6 +89,28 @@ signupForm.addEventListener("submit", async (e) => {
   const password = document.getElementById("signupPassword").value;
   const userName = document.getElementById("username").value;
   const role = document.getElementById("role").value;
+
+  let validationFailed = false;
+
+  if (!validateName(name)) {
+    nameError.textContent = "Name must contain only alphabetic characters.";
+    validationFailed = true;
+  }
+
+  if (!validateUsername(userName)) {
+    usernameError.textContent = "Username can only contain alphanumeric characters and @ . _ -";
+    validationFailed = true;
+  }
+
+  if (!validateEmail(email)) {
+    emailError.textContent = "Email must be in the format yourname@domain.com";
+    validationFailed = true;
+  }
+
+  if (validationFailed) {
+    alert("Please fix the errors in the form before submitting.");
+    return;
+  }
 
   let userData = {
     email: email,
